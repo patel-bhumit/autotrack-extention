@@ -1,0 +1,29 @@
+{
+    "manifest_version": 3,
+    "name": "AutoTrack",
+    "version": "1.0.0",
+    "description": "Track your activities automatically.",
+    "icons": {
+      "16": "vite.svg"
+    },
+    "action": {
+      "default_title": "AutoTrack",
+      "default_popup": "index.html" 
+    },
+    "permissions": [
+      "storage",
+      "activeTab",
+      "scripting"
+    ],
+    "background": {
+    "service_worker": "background.js"
+    },
+    "host_permissions": ["https://www.linkedin.com/*"],
+    "content_scripts": [
+      {
+        "matches": ["https://www.linkedin.com/jobs/*"],
+        "js": ["contentScript.js"]
+      }
+    ]
+  }
+  
