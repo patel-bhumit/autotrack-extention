@@ -1,8 +1,16 @@
 console.log("Content script loaded on LinkedIn job page");
 
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    console.log("Message received in content script:", message);
+    if (message.type === "FETCH_JOB_DETAILS") {
+        extractJobDetails();
+        sendResponse({ status: "Job details fetched" });
+    }
+});
+
 function extractJobDetails() {
-    const jobTitleElement = document.querySelector(".job-details-jobs-unified-top-card__job-title h1 a");
-    const companyNameElement = document.querySelector(".job-details-jobs-unified-top-card__company-name > .app-aware-link");
+    const jobTitleElement = document.querySelector( ".jobsearch-JobInfoHeader-title.css-1t78hkx.e1tiznh50 > span:nth-of-type(1), .job-details-jobs-unified-top-card__job-title h1 a");
+    const companyNameElement = document.querySelector(".css-r3nvn0.e19afand0, .job-details-jobs-unified-top-card__company-name > .app-aware-link" );
 
     const jobTitle = jobTitleElement ? jobTitleElement.innerText.trim() : "Job title not found";
     const companyName = companyNameElement ? companyNameElement.innerText.trim() : "Company name not found";
@@ -31,13 +39,4 @@ function extractJobDetails() {
         },
     });
 }
-
-// Listen for a request to fetch job details
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.type === "FETCH_JOB_DETAILS") {
-        // Call function to extract job details or handle the message
-        extractJobDetails();
-        sendResponse({ status: "Job details fetched" });
-    }
-});
 

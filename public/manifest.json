@@ -13,15 +13,16 @@
     "permissions": [
       "storage",
       "activeTab",
-      "scripting"
+      "scripting",
+      "tabs"
     ],
     "background": {
     "service_worker": "background.js"
     },
-    "host_permissions": ["https://www.linkedin.com/*"],
+    "host_permissions": ["https://www.linkedin.com/*", "https://*.indeed.com/*"],
     "content_scripts": [
       {
-        "matches": ["https://www.linkedin.com/jobs/*"],
+        "matches": ["https://www.linkedin.com/jobs/*", "https://*.indeed.com/*"],
         "js": ["contentScript.js"]
       }
     ]
